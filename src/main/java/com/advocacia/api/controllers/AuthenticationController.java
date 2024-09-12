@@ -48,7 +48,7 @@ public class AuthenticationController {
         }
 
         if (!passwordEncoder.matches(data.password(), userDetails.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha Incorreta!");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha incorretos.");
         }
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
@@ -88,7 +88,7 @@ public class AuthenticationController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Não autorizado a atualizar essa conta.");
             }
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário incorreto ou não encontrado.");
         }
     }
 
@@ -116,7 +116,7 @@ public class AuthenticationController {
         }
         Optional<User> userId = userService.findById(id);
         if(userId.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário ou senha incorretos.");
         }
         userService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuario deletado com sucesso!");
